@@ -67,5 +67,22 @@ def deletetask(taskid):
     todo_app_data["tasks"] = [task for task in todo_app_data["tasks"] if task["id"] != taskid]
     return redirect(url_for('todo'))
 
+@app.route("/task/edit/<int:taskid>", methods=["GET", "POST"])
+def edit_task(taskid):
+    global todo_app_data
+
+    task_to_edit = next((task for task in todo_app_data["tasks"] if task["id"] == taskid), None)
+
+    if request.method == "POST":
+        # Update the task with new title and completed status from the form
+        new_title = request.form["title"]
+        new_completed = request.form["completed"] == "True"  # Convert string to boolean
+        if task_to_edit:
+            task_to_edit["title"] = new_title  # Update task title
+            task_to_edit["completed"] = new_completed  # Update completed status
+            return redirect(url_for('todo'))  # Redirect after update
+
+    return render_template("edit_task.html", task=task_to_edit)
+
 if __name__ == "__main__":
     app.run(debug=True)

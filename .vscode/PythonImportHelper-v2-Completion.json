@@ -71,7 +71,16 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def deletetask(taskid):\n    global todo_app_data\n    todo_app_data[\"tasks\"] = [task for task in todo_app_data[\"tasks\"] if task[\"id\"] != taskid]\n    return redirect(url_for('todo'))\nif __name__ == \"__main__\":\n    app.run(debug=True)",
+        "peekOfCode": "def deletetask(taskid):\n    global todo_app_data\n    todo_app_data[\"tasks\"] = [task for task in todo_app_data[\"tasks\"] if task[\"id\"] != taskid]\n    return redirect(url_for('todo'))\n@app.route(\"/task/edit/<int:taskid>\", methods=[\"GET\", \"POST\"])\ndef edit_task(taskid):\n    global todo_app_data\n    task_to_edit = next((task for task in todo_app_data[\"tasks\"] if task[\"id\"] == taskid), None)\n    if request.method == \"POST\":\n        # Update the task with new title and completed status from the form",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "edit_task",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def edit_task(taskid):\n    global todo_app_data\n    task_to_edit = next((task for task in todo_app_data[\"tasks\"] if task[\"id\"] == taskid), None)\n    if request.method == \"POST\":\n        # Update the task with new title and completed status from the form\n        new_title = request.form[\"title\"]\n        new_completed = request.form[\"completed\"] == \"True\"  # Convert string to boolean\n        if task_to_edit:\n            task_to_edit[\"title\"] = new_title  # Update task title\n            task_to_edit[\"completed\"] = new_completed  # Update completed status",
         "detail": "app",
         "documentation": {}
     },

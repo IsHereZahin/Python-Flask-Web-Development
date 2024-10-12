@@ -1,0 +1,75 @@
+<!-- edit_task.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"], select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit {{ task.title }}</h1>
+    <form action="" method="POST">
+        <input type="text" name="title" value="{{ task.title }}" required>
+        
+        <label for="completed">Completed:</label>
+        <select name="completed" id="completed" required>
+            <option value="False" {% if not task.completed %}selected{% endif %}>No</option>
+            <option value="True" {% if task.completed %}selected{% endif %}>Yes</option>
+        </select>
+
+        <button type="submit">Update Task</button>
+        <a href="{{ url_for('todo') }}">Cancel</a>
+    </form>
+</body>
+</html>
