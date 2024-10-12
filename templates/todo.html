@@ -58,9 +58,9 @@
                                 <span class="status incomplete" style="color: red">Incomplete</span>
                             {% endif %}
                         </td>
-                        <td>
-                            <button class="edit btn btn-warning">Edit</button>
-                            <button class="delete btn btn-danger">Delete</button>
+                        <td class="action-button">
+                            <a href="task/edit/{{ task.id }}" class="edit btn btn-warning">Edit</a>
+                            <a href="task/delete/{{ task.id }}" class="delete btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 {% endfor %}

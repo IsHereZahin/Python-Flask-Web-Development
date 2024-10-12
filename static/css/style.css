@@ -7,6 +7,7 @@ body {
     line-height: 1.6;
 }
 
+
 h1 {
     color: #0D1117;
     font-size: 2.5em;
@@ -51,4 +52,9 @@ p {
     border-radius: 5px;
     background-color: #ffffff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.action-button {
+    display: flex;
+    gap: 5px;
 }

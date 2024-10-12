@@ -24,12 +24,19 @@
         "documentation": {}
     },
     {
-        "label": "random",
-        "kind": 6,
+        "label": "redirect",
+        "importPath": "flask",
+        "description": "flask",
         "isExtraImport": true,
-        "importPath": "random",
-        "description": "random",
-        "detail": "random",
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "url_for",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
         "documentation": {}
     },
     {
@@ -55,7 +62,16 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def todo():\n    if request.method == \"POST\":\n        title = request.form[\"title\"]\n        print(\"Title:\", title)\n        new_task = {\n            \"id\": random.randint(1, 11),\n            \"title\": title,\n            \"completed\": False\n        }\n        todo_app_data[\"tasks\"].append(new_task)",
+        "peekOfCode": "def todo():\n    global last_task_id\n    if request.method == \"POST\":\n        title = request.form[\"title\"]\n        print(\"Title:\", title)\n        last_task_id += 1\n        new_task = {\n            \"id\": last_task_id,\n            \"title\": title,\n            \"completed\": False",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "deletetask",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def deletetask(taskid):\n    global todo_app_data\n    todo_app_data[\"tasks\"] = [task for task in todo_app_data[\"tasks\"] if task[\"id\"] != taskid]\n    return redirect(url_for('todo'))\nif __name__ == \"__main__\":\n    app.run(debug=True)",
         "detail": "app",
         "documentation": {}
     },
@@ -64,7 +80,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app = Flask(__name__)\n# Route for the home page\ndatas = {\n    \"name\": \"Zahin\",\n    \"numbers\":[1,2,3,4,5,6,7,8,9]\n}\n@app.route(\"/\")\n@app.route(\"/home\")\ndef home():\n    return render_template('index.html', data=datas)",
+        "peekOfCode": "app = Flask(__name__)\n# Route for the home page\ndatas = {\n    \"name\": \"Zahin\",\n    \"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9]\n}\n@app.route(\"/\")\n@app.route(\"/home\")\ndef home():\n    return render_template('index.html', data=datas)",
         "detail": "app",
         "documentation": {}
     },
@@ -73,7 +89,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "datas = {\n    \"name\": \"Zahin\",\n    \"numbers\":[1,2,3,4,5,6,7,8,9]\n}\n@app.route(\"/\")\n@app.route(\"/home\")\ndef home():\n    return render_template('index.html', data=datas)\n# Route for the About page\n@app.route(\"/about\")",
+        "peekOfCode": "datas = {\n    \"name\": \"Zahin\",\n    \"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9]\n}\n@app.route(\"/\")\n@app.route(\"/home\")\ndef home():\n    return render_template('index.html', data=datas)\n# Route for the About page\n@app.route(\"/about\")",
         "detail": "app",
         "documentation": {}
     },
@@ -83,6 +99,15 @@
         "importPath": "app",
         "description": "app",
         "peekOfCode": "todo_app_data = {\n    \"title\": \"Todo List Management\",\n    \"description\": \"The Flask Todo Application is a simple web app for managing tasks. Users can add, view, and update tasks in a clean, user-friendly interface, showcasing Flask's dynamic capabilities.\",\n    \"tasks\": [\n        {\n            \"id\": 1,\n            \"title\": \"Task 1\",\n            \"completed\": False,\n        },\n        {",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "last_task_id",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "last_task_id = max(task[\"id\"] for task in todo_app_data[\"tasks\"]) if todo_app_data[\"tasks\"] else 0\n@app.route(\"/todo\", methods=[\"GET\", \"POST\"])\ndef todo():\n    global last_task_id\n    if request.method == \"POST\":\n        title = request.form[\"title\"]\n        print(\"Title:\", title)\n        last_task_id += 1\n        new_task = {\n            \"id\": last_task_id,",
         "detail": "app",
         "documentation": {}
     }
