@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+import random
 
 app = Flask(__name__)
 
@@ -40,8 +41,19 @@ todo_app_data = {
     ]
 }
 
-@app.route("/todo")
+@app.route("/todo", methods=["GET", "POST"])
 def todo():
+    if request.method == "POST":
+        title = request.form["title"]
+        print("Title:", title)
+
+        new_task = {
+            "id": random.randint(1, 11),
+            "title": title,
+            "completed": False
+        }
+        todo_app_data["tasks"].append(new_task)
+
     return render_template("todo.html", data=todo_app_data)
 
 if __name__ == "__main__":

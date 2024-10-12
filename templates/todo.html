@@ -33,9 +33,9 @@
     <div class="container">
         <h1>{{ data.title }}</h1>
         <p>{{ data.description }}</p>
-        <form class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Add a new task...">
-            <button class="btn btn-success">Submit</button>
+        <form action="/todo" method="POST" class="input-group mb-3">
+            <input type="text" name="title" class="form-control" placeholder="Add a new task title...">
+            <button class="btn btn-success" type="submit">Submit</button>
         </form>
         <table class="table table-striped">
             <thead>
@@ -53,9 +53,9 @@
                         <td>{{ task.title }}</td>
                         <td>
                             {% if task.completed %}
-                                <span class="status complete">Complete</span>
+                                <span class="status complete" style="color: green">Complete</span>
                             {% else %}
-                                <span class="status incomplete">Incomplete</span>
+                                <span class="status incomplete" style="color: red">Incomplete</span>
                             {% endif %}
                         </td>
                         <td>

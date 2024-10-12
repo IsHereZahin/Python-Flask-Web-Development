@@ -16,6 +16,23 @@
         "documentation": {}
     },
     {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
         "label": "home",
         "kind": 2,
         "importPath": "app",
@@ -38,7 +55,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def todo():\n    return render_template(\"todo.html\", data=todo_app_data)\nif __name__ == \"__main__\":\n    app.run(debug=True)",
+        "peekOfCode": "def todo():\n    if request.method == \"POST\":\n        title = request.form[\"title\"]\n        print(\"Title:\", title)\n        new_task = {\n            \"id\": random.randint(1, 11),\n            \"title\": title,\n            \"completed\": False\n        }\n        todo_app_data[\"tasks\"].append(new_task)",
         "detail": "app",
         "documentation": {}
     },
