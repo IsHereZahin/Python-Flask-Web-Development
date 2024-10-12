@@ -17,5 +17,32 @@ def home():
 def about():
     return render_template('about.html')
 
+# Route for the Todo page
+todo_app_data = {
+    "title": "Todo List Management",
+    "description": "The Flask Todo Application is a simple web app for managing tasks. Users can add, view, and update tasks in a clean, user-friendly interface, showcasing Flask's dynamic capabilities.",
+    "tasks": [
+        {
+            "id": 1,
+            "title": "Task 1",
+            "completed": False,
+        },
+        {
+            "id": 2,
+            "title": "Task 2",
+            "completed": True,
+        },
+        {
+            "id": 3,
+            "title": "Task 3",
+            "completed": False,
+        },
+    ]
+}
+
+@app.route("/todo")
+def todo():
+    return render_template("todo.html", data=todo_app_data)
+
 if __name__ == "__main__":
     app.run(debug=True)

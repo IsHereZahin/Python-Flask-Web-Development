@@ -20,7 +20,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def home():\n    return render_template('index.html', data=datas)\n# Route for the About page\n@app.route(\"/about\")\ndef about():\n    return render_template('about.html')\nif __name__ == \"__main__\":\n    app.run(debug=True)",
+        "peekOfCode": "def home():\n    return render_template('index.html', data=datas)\n# Route for the About page\n@app.route(\"/about\")\ndef about():\n    return render_template('about.html')\n# Route for the Todo page\ntodo_app_data = {\n    \"title\": \"Todo List Management\",\n    \"description\": \"The Flask Todo Application is a simple web app for managing tasks. Users can add, view, and update tasks in a clean, user-friendly interface, showcasing Flask's dynamic capabilities.\",",
         "detail": "app",
         "documentation": {}
     },
@@ -29,7 +29,16 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def about():\n    return render_template('about.html')\nif __name__ == \"__main__\":\n    app.run(debug=True)",
+        "peekOfCode": "def about():\n    return render_template('about.html')\n# Route for the Todo page\ntodo_app_data = {\n    \"title\": \"Todo List Management\",\n    \"description\": \"The Flask Todo Application is a simple web app for managing tasks. Users can add, view, and update tasks in a clean, user-friendly interface, showcasing Flask's dynamic capabilities.\",\n    \"tasks\": [\n        {\n            \"id\": 1,\n            \"title\": \"Task 1\",",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "todo",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def todo():\n    return render_template(\"todo.html\", data=todo_app_data)\nif __name__ == \"__main__\":\n    app.run(debug=True)",
         "detail": "app",
         "documentation": {}
     },
@@ -48,6 +57,15 @@
         "importPath": "app",
         "description": "app",
         "peekOfCode": "datas = {\n    \"name\": \"Zahin\",\n    \"numbers\":[1,2,3,4,5,6,7,8,9]\n}\n@app.route(\"/\")\n@app.route(\"/home\")\ndef home():\n    return render_template('index.html', data=datas)\n# Route for the About page\n@app.route(\"/about\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "todo_app_data",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "todo_app_data = {\n    \"title\": \"Todo List Management\",\n    \"description\": \"The Flask Todo Application is a simple web app for managing tasks. Users can add, view, and update tasks in a clean, user-friendly interface, showcasing Flask's dynamic capabilities.\",\n    \"tasks\": [\n        {\n            \"id\": 1,\n            \"title\": \"Task 1\",\n            \"completed\": False,\n        },\n        {",
         "detail": "app",
         "documentation": {}
     }
