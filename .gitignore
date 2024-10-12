@@ -1,0 +1,10 @@
+# Ignore virtual environment folder
+venv/
+
+# Ignore other typical files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore editor-specific settings (e.g., VSCode)
+.idea/

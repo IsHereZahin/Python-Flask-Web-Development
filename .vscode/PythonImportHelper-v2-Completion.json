@@ -1,0 +1,19 @@
+[
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\nprint(\"Hello World\")\nif __name__ == \"__main__\":\n    app.run()",
+        "detail": "app",
+        "documentation": {}
+    }
+]
