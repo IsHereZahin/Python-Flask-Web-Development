@@ -8,11 +8,19 @@
         "documentation": {}
     },
     {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "home",
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def home():\n    return \"<h1 style='color:#0D1117; text-align:center;'>Welcome to the Flask homepage</h1>\"\n# Route for the About page\n@app.route(\"/about\")\ndef about():\n    return \"<h1 style='color:#0D1117;'>This is the Flask 'About' page</h1>\"\nif __name__ == \"__main__\":\n    app.run(debug=True)",
+        "peekOfCode": "def home():\n    return render_template('index.html')\n# Route for the About page\n@app.route(\"/about\")\ndef about():\n    return render_template('about.html')\nif __name__ == \"__main__\":\n    app.run(debug=True)",
         "detail": "app",
         "documentation": {}
     },
@@ -21,7 +29,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def about():\n    return \"<h1 style='color:#0D1117;'>This is the Flask 'About' page</h1>\"\nif __name__ == \"__main__\":\n    app.run(debug=True)",
+        "peekOfCode": "def about():\n    return render_template('about.html')\nif __name__ == \"__main__\":\n    app.run(debug=True)",
         "detail": "app",
         "documentation": {}
     },
@@ -30,7 +38,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app = Flask(__name__)\n# Route for the home page\n@app.route(\"/\")\ndef home():\n    return \"<h1 style='color:#0D1117; text-align:center;'>Welcome to the Flask homepage</h1>\"\n# Route for the About page\n@app.route(\"/about\")\ndef about():\n    return \"<h1 style='color:#0D1117;'>This is the Flask 'About' page</h1>\"\nif __name__ == \"__main__\":",
+        "peekOfCode": "app = Flask(__name__)\n# Route for the home page\n@app.route(\"/\")\n@app.route(\"/home\")\ndef home():\n    return render_template('index.html')\n# Route for the About page\n@app.route(\"/about\")\ndef about():\n    return render_template('about.html')",
         "detail": "app",
         "documentation": {}
     }
