@@ -20,7 +20,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def home():\n    return render_template('index.html')\n# Route for the About page\n@app.route(\"/about\")\ndef about():\n    return render_template('about.html')\nif __name__ == \"__main__\":\n    app.run(debug=True)",
+        "peekOfCode": "def home():\n    return render_template('index.html', data=datas)\n# Route for the About page\n@app.route(\"/about\")\ndef about():\n    return render_template('about.html')\nif __name__ == \"__main__\":\n    app.run(debug=True)",
         "detail": "app",
         "documentation": {}
     },
@@ -38,7 +38,16 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app = Flask(__name__)\n# Route for the home page\n@app.route(\"/\")\n@app.route(\"/home\")\ndef home():\n    return render_template('index.html')\n# Route for the About page\n@app.route(\"/about\")\ndef about():\n    return render_template('about.html')",
+        "peekOfCode": "app = Flask(__name__)\n# Route for the home page\ndatas = {\n    \"name\": \"Zahin\",\n    \"numbers\":[1,2,3,4,5,6,7,8,9]\n}\n@app.route(\"/\")\n@app.route(\"/home\")\ndef home():\n    return render_template('index.html', data=datas)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "datas",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "datas = {\n    \"name\": \"Zahin\",\n    \"numbers\":[1,2,3,4,5,6,7,8,9]\n}\n@app.route(\"/\")\n@app.route(\"/home\")\ndef home():\n    return render_template('index.html', data=datas)\n# Route for the About page\n@app.route(\"/about\")",
         "detail": "app",
         "documentation": {}
     }
