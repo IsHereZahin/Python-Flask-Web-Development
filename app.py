@@ -13,4 +13,4 @@ def about():
     return "<h1 style='color:#0D1117;'>This is the Flask 'About' page</h1>"
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
