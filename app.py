@@ -1,6 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+app.config['SECRET_KEY'] = '02cb294d2689485d8910bb850d9bc2e2'
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # Route for the home page
 datas = {
@@ -17,6 +23,14 @@ def home():
 @app.route("/about")
 def about():
     return render_template('about.html')
+
+
+class Todo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    completed = db.Column(db.Boolean)
+
+
 
 # Route for the Todo page
 todo_app_data = {
