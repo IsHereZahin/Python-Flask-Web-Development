@@ -24,77 +24,53 @@ def home():
 def about():
     return render_template('about.html')
 
-
+# Database model for Todo tasks
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100))
-    completed = db.Column(db.Boolean)
-
-
+    title = db.Column(db.String(100), nullable=False)
+    completed = db.Column(db.Boolean, default=False)
 
 # Route for the Todo page
-todo_app_data = {
-    "title": "Todo List Management",
-    "description": "The Flask Todo Application is a simple web app for managing tasks. Users can add, view, and update tasks in a clean, user-friendly interface, showcasing Flask's dynamic capabilities.",
-    "tasks": [
-        {
-            "id": 1,
-            "title": "Task 1",
-            "completed": False,
-        },
-        {
-            "id": 2,
-            "title": "Task 2",
-            "completed": True,
-        },
-        {
-            "id": 3,
-            "title": "Task 3",
-            "completed": False,
-        },
-    ]
-}
-
-last_task_id = max(task["id"] for task in todo_app_data["tasks"]) if todo_app_data["tasks"] else 0
-
 @app.route("/todo", methods=["GET", "POST"])
 def todo():
-    global last_task_id
     if request.method == "POST":
         title = request.form["title"]
-        print("Title:", title)
+        new_task = Todo(title=title)
+        db.session.add(new_task)
+        db.session.commit()
+        return redirect(url_for('todo'))
 
-        last_task_id += 1
+    # Fetch all tasks from the database
+    tasks = Todo.query.all()
 
-        new_task = {
-            "id": last_task_id,
-            "title": title,
-            "completed": False
-        }
-        todo_app_data["tasks"].append(new_task)
+    # Define the data dictionary
+    data = {
+        "title": "Todo List Management",
+        "description": "The Flask Todo Application is a simple web app for managing tasks. Users can add, view, and update tasks in a clean, user-friendly interface.",
+        "tasks": tasks
+    }
 
-    return render_template("todo.html", data=todo_app_data)
+    return render_template("todo.html", data=data)
 
 @app.route("/task/delete/<int:taskid>")
 def deletetask(taskid):
-    global todo_app_data
-    todo_app_data["tasks"] = [task for task in todo_app_data["tasks"] if task["id"] != taskid]
+    task_to_delete = Todo.query.get(taskid)
+    if task_to_delete:
+        db.session.delete(task_to_delete)
+        db.session.commit()
     return redirect(url_for('todo'))
 
 @app.route("/task/edit/<int:taskid>", methods=["GET", "POST"])
 def edit_task(taskid):
-    global todo_app_data
-
-    task_to_edit = next((task for task in todo_app_data["tasks"] if task["id"] == taskid), None)
+    task_to_edit = Todo.query.get(taskid)
+    if not task_to_edit:
+        return redirect(url_for('todo'))  # Redirect if task not found
 
     if request.method == "POST":
-        # Update the task with new title and completed status from the form
-        new_title = request.form["title"]
-        new_completed = request.form["completed"] == "True"  # Convert string to boolean
-        if task_to_edit:
-            task_to_edit["title"] = new_title  # Update task title
-            task_to_edit["completed"] = new_completed  # Update completed status
-            return redirect(url_for('todo'))  # Redirect after update
+        task_to_edit.title = request.form["title"]
+        task_to_edit.completed = request.form.get("completed") == "True"
+        db.session.commit()
+        return redirect(url_for('todo'))
 
     return render_template("edit_task.html", task=task_to_edit)
 

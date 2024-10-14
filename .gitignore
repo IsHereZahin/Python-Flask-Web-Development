@@ -1,10 +1,39 @@
-# Ignore virtual environment folder
-venv/
-
-# Ignore other typical files
+# Byte-compiled / optimized / DLL files
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables and config
+.env
+
+# Flask/SQLAlchemy database files
+*.sqlite3
+*.db
+
+# Flask migration files
+migrations/
+
+# Python virtual environment
+venv/
+ENV/
+
+# Logs and temporary files
+*.log
+*.pot
 *.pyc
 *.pyo
+*.pyd
+*.pid
+*.seed
+*.pidfile
 
-# Ignore editor-specific settings (e.g., VSCode)
-.idea/
+# Static files built during runtime
+staticfiles/
+static/
+
+# vscode settings and caches
+.vscode/cache/
+
+# System files
+.DS_Store
+Thumbs.db

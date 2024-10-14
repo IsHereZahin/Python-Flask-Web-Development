@@ -236,7 +236,7 @@
         "kind": 6,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "class Todo(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    title = db.Column(db.String(100))\n    completed = db.Column(db.Boolean)\n# Route for the Todo page\ntodo_app_data = {\n    \"title\": \"Todo List Management\",\n    \"description\": \"The Flask Todo Application is a simple web app for managing tasks. Users can add, view, and update tasks in a clean, user-friendly interface, showcasing Flask's dynamic capabilities.\",\n    \"tasks\": [\n        {",
+        "peekOfCode": "class Todo(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    title = db.Column(db.String(100), nullable=False)\n    completed = db.Column(db.Boolean, default=False)\n# Route for the Todo page\n@app.route(\"/todo\", methods=[\"GET\", \"POST\"])\ndef todo():\n    if request.method == \"POST\":\n        title = request.form[\"title\"]\n        new_task = Todo(title=title)",
         "detail": "app",
         "documentation": {}
     },
@@ -245,7 +245,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def home():\n    return render_template('index.html', data=datas)\n# Route for the About page\n@app.route(\"/about\")\ndef about():\n    return render_template('about.html')\nclass Todo(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    title = db.Column(db.String(100))\n    completed = db.Column(db.Boolean)",
+        "peekOfCode": "def home():\n    return render_template('index.html', data=datas)\n# Route for the About page\n@app.route(\"/about\")\ndef about():\n    return render_template('about.html')\n# Database model for Todo tasks\nclass Todo(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    title = db.Column(db.String(100), nullable=False)",
         "detail": "app",
         "documentation": {}
     },
@@ -254,7 +254,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def about():\n    return render_template('about.html')\nclass Todo(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    title = db.Column(db.String(100))\n    completed = db.Column(db.Boolean)\n# Route for the Todo page\ntodo_app_data = {\n    \"title\": \"Todo List Management\",\n    \"description\": \"The Flask Todo Application is a simple web app for managing tasks. Users can add, view, and update tasks in a clean, user-friendly interface, showcasing Flask's dynamic capabilities.\",",
+        "peekOfCode": "def about():\n    return render_template('about.html')\n# Database model for Todo tasks\nclass Todo(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    title = db.Column(db.String(100), nullable=False)\n    completed = db.Column(db.Boolean, default=False)\n# Route for the Todo page\n@app.route(\"/todo\", methods=[\"GET\", \"POST\"])\ndef todo():",
         "detail": "app",
         "documentation": {}
     },
@@ -263,7 +263,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def todo():\n    global last_task_id\n    if request.method == \"POST\":\n        title = request.form[\"title\"]\n        print(\"Title:\", title)\n        last_task_id += 1\n        new_task = {\n            \"id\": last_task_id,\n            \"title\": title,\n            \"completed\": False",
+        "peekOfCode": "def todo():\n    if request.method == \"POST\":\n        title = request.form[\"title\"]\n        new_task = Todo(title=title)\n        db.session.add(new_task)\n        db.session.commit()\n        return redirect(url_for('todo'))\n    # Fetch all tasks from the database\n    tasks = Todo.query.all()\n    # Define the data dictionary",
         "detail": "app",
         "documentation": {}
     },
@@ -272,7 +272,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def deletetask(taskid):\n    global todo_app_data\n    todo_app_data[\"tasks\"] = [task for task in todo_app_data[\"tasks\"] if task[\"id\"] != taskid]\n    return redirect(url_for('todo'))\n@app.route(\"/task/edit/<int:taskid>\", methods=[\"GET\", \"POST\"])\ndef edit_task(taskid):\n    global todo_app_data\n    task_to_edit = next((task for task in todo_app_data[\"tasks\"] if task[\"id\"] == taskid), None)\n    if request.method == \"POST\":\n        # Update the task with new title and completed status from the form",
+        "peekOfCode": "def deletetask(taskid):\n    task_to_delete = Todo.query.get(taskid)\n    if task_to_delete:\n        db.session.delete(task_to_delete)\n        db.session.commit()\n    return redirect(url_for('todo'))\n@app.route(\"/task/edit/<int:taskid>\", methods=[\"GET\", \"POST\"])\ndef edit_task(taskid):\n    task_to_edit = Todo.query.get(taskid)\n    if not task_to_edit:",
         "detail": "app",
         "documentation": {}
     },
@@ -281,7 +281,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def edit_task(taskid):\n    global todo_app_data\n    task_to_edit = next((task for task in todo_app_data[\"tasks\"] if task[\"id\"] == taskid), None)\n    if request.method == \"POST\":\n        # Update the task with new title and completed status from the form\n        new_title = request.form[\"title\"]\n        new_completed = request.form[\"completed\"] == \"True\"  # Convert string to boolean\n        if task_to_edit:\n            task_to_edit[\"title\"] = new_title  # Update task title\n            task_to_edit[\"completed\"] = new_completed  # Update completed status",
+        "peekOfCode": "def edit_task(taskid):\n    task_to_edit = Todo.query.get(taskid)\n    if not task_to_edit:\n        return redirect(url_for('todo'))  # Redirect if task not found\n    if request.method == \"POST\":\n        task_to_edit.title = request.form[\"title\"]\n        task_to_edit.completed = request.form.get(\"completed\") == \"True\"\n        db.session.commit()\n        return redirect(url_for('todo'))\n    return render_template(\"edit_task.html\", task=task_to_edit)",
         "detail": "app",
         "documentation": {}
     },
@@ -336,24 +336,6 @@
         "importPath": "app",
         "description": "app",
         "peekOfCode": "datas = {\n    \"name\": \"Zahin\",\n    \"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9]\n}\n@app.route(\"/\")\n@app.route(\"/home\")\ndef home():\n    return render_template('index.html', data=datas)\n# Route for the About page\n@app.route(\"/about\")",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "todo_app_data",
-        "kind": 5,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "todo_app_data = {\n    \"title\": \"Todo List Management\",\n    \"description\": \"The Flask Todo Application is a simple web app for managing tasks. Users can add, view, and update tasks in a clean, user-friendly interface, showcasing Flask's dynamic capabilities.\",\n    \"tasks\": [\n        {\n            \"id\": 1,\n            \"title\": \"Task 1\",\n            \"completed\": False,\n        },\n        {",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "last_task_id",
-        "kind": 5,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "last_task_id = max(task[\"id\"] for task in todo_app_data[\"tasks\"]) if todo_app_data[\"tasks\"] else 0\n@app.route(\"/todo\", methods=[\"GET\", \"POST\"])\ndef todo():\n    global last_task_id\n    if request.method == \"POST\":\n        title = request.form[\"title\"]\n        print(\"Title:\", title)\n        last_task_id += 1\n        new_task = {\n            \"id\": last_task_id,",
         "detail": "app",
         "documentation": {}
     }
